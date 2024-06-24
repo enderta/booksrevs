@@ -2,13 +2,54 @@ const bcrypt = require("bcrypt");
 const pool = require("../db.config");
 const jwt = require("jsonwebtoken");
 
+
 exports.registerUser = async (userData) => {
     const { username, password, email } = userData;
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    if(username.length < 1){
+        return {
+            status: "error",
+            message: "Username cannot be empty",
+        };
+    }
+    if(email.length < 1){
+        return {
+            status: "error",
+            message: "Email cannot be empty",
+        };
+    }
+    if(password.length < 1){
+        return {
+            status: "error",
+            message: "Password cannot be empty",
+        };
+    }
+
+    // Check if username is already taken
+    const userWithSameUsername = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+    if (userWithSameUsername.rows.length > 0) {
+        return {
+            status: "error",
+            message: "Username is already taken",
+        };
+    }
+
+    // Check if email is already taken
+    const userWithSameEmail = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+    if (userWithSameEmail.rows.length > 0) {
+        return {
+            status: "error",
+            message: "Email is already taken",
+        };
+    }
+
+    // If username and email are not taken, insert new user with role 'user'
     const user = await pool.query(
-        "INSERT INTO users (username, password, email, role) VALUES ($1, $2, $3, 'user') RETURNING *",
-        [username, hashedPassword, email]
+        "INSERT INTO users (username, password, email, role) VALUES ($1, $2, $3, $4) RETURNING *",
+        [username, hashedPassword, email, 'user']
     );
+
     return {
         status: "success",
         message: `User ${username} registered successfully`,
