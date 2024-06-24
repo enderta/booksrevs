@@ -58,9 +58,14 @@ const Books = () => {
                                         {book.author && (
                                             <Card.Text>{book.author}</Card.Text>
                                         )}
-                                        <Link to={`/book/${book.id}`}>
-                                            <Button variant="primary">Read Reviews</Button>
-                                        </Link>
+
+                                            <Button variant="outline-primary" onClick={
+
+                                                ()=>
+                                                    window.location = `/revs/${book.id}`
+
+                                            }>Read Reviews</Button>
+
                                         {role === 'admin' && (
                                             <Button variant="outline-danger" style={{float: 'right'}} onClick={() => handleDelete(book.id)}>Delete</Button>
                                         )}

@@ -5,6 +5,8 @@ import Login from "./Login";
 import Home from "./Home";
 import Books from "./Books";
 import AddBook from "./AddBook";
+import Revs from "./Revs";
+import AddRev from "./AddRev";
 
 
 function Pages() {
@@ -21,7 +23,8 @@ function Pages() {
                             <Route path="/login" element={<Login/>}/>
                             <Route path="/books" element={<Books/>}/>
                             <Route path="/add" element={<AddBook/>}/>
-
+                            <Route path="/revs/:id" element={<Revs/>}/>
+                            <Route path="/addrev/:id" element={<AddRev/>}/>
                         </>
                     ) : (
                         <>
@@ -29,6 +32,8 @@ function Pages() {
                             <Route path="/register" element={<Register/>}/>
                             <Route path="/login" element={<Login/>}/>
                             <Route path="/books" element={<Books/>}/>
+                            <Route path="/revs/:id" element={<Revs/>}/>
+
 
                         </>
                     )

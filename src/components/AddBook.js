@@ -35,7 +35,6 @@ const AddBook = () => {
             }>
                 Back to Books
             </Button>
-
             <br/>
             <Card style={{ backgroundColor: '#000', borderColor: '#000', color: 'white', width: '50%', margin: 'auto' }}>
                 <Card.Body>
