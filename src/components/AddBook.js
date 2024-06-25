@@ -29,7 +29,7 @@ const AddBook = () => {
 
     return (
         <div style={{backgroundColor:"black"}}>
-            <Button variant={"primary"} type={"submit"} style={{backgroundColor: 'goldenrod', margin:"10px",border: 'none'}} onClick={() => {
+            <Button variant={"outline-danger"} type={"submit"} style={{ margin:"10px"}} onClick={() => {
                 window.location = '/books';
             }
             }>

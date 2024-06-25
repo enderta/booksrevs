@@ -17,36 +17,37 @@ const createReview = async (book_id, user_id, review_text, rating) => {
             "insert into reviews (book_id, user_id, review_text, rating) values ($1, $2, $3, $4) returning *;",
             [book_id, user_id, review_text, rating]
         );
-        return response.rows[0];
+        return response
     } catch (error) {
         console.log(error);
     }
 }
 
 const getReviews = async () => {
+   //get reviews as an array
     try {
-        const response = await pool.query("SELECT * FROM reviews");
+        const response = await pool.query(
+            "select * from reviews;"
+        );
         return response.rows;
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 }
 
 const getReviewById = async (req) => {
+    //get review by book id as an array
     try {
         const id = req.params.id;
         const response = await pool.query(
-            "select * from reviews where id = $1;",
+            "select * from reviews where book_id = $1;",
             [id]
         );
-        if (response.rows.length === 0) {
-            return { error: "Review not found" };
-        } else {
-            return response.rows[0];
-        }
+        return response.rows;
     } catch (error) {
         console.log(error);
     }
+
 }
 
 const updateReview = async (req, res) => {

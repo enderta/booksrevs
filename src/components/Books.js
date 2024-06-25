@@ -40,9 +40,13 @@ const Books = () => {
                     <div style={{backgroundColor: '#000',margin:"10px", display: 'flex', justifyContent: 'space-between' }}>
                         <Button variant="outline-danger" onClick={handleLogout}>Logout</Button>
                         {role === 'admin' && (
-                            <Link to="/add">
-                                <Button variant="outline-primary">Add Book</Button>
-                            </Link>
+
+                                <Button variant="outline-primary"
+                                onClick={() => {
+                                    window.location = '/add';
+                                }}
+                                >Add Book</Button>
+
                         )}
                     </div>
                     <h1 className="text-center" style={{color:"goldenrod"}}>Books</h1>
