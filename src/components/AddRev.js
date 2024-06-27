@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Card, Container, Form} from "react-bootstrap";
 import StarRatings from 'react-star-ratings';
 
 const AddRev = () => {
     const [reviewText, setReviewText] = useState('');
     const [rating, setRating] = useState(1);
+    const [userName,setUserName]=useState("")
     const id = window.location.pathname.split('/').pop();
     const token = localStorage.getItem('token');
     const user_id = localStorage.getItem('user_id');
@@ -26,6 +27,7 @@ const AddRev = () => {
             alert(data.message);
         }
     }
+
 
     return (
         <Container fluid style={{backgroundColor: '#000'}}>

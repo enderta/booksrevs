@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Container, Row, Col, Button} from 'react-bootstrap';
+import {Card, Container, Row, Col, Button, CardSubtitle} from 'react-bootstrap';
 import StarRatings from 'react-star-ratings';
+
 const Revs = () => {
     const [revs, setRevs] = useState([]);
+    const [userName, setUserName] = useState('');
     const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('user_id');
     const id = window.location.pathname.split('/').pop();
+
     useEffect(() => {
         fetch('http://localhost:3000/api/rev/'+id, {
             headers: { Authorization: token },
@@ -14,10 +18,22 @@ const Revs = () => {
                 if(data.length > 0){
                     setRevs(data.sort((a, b) => a.id - b.id));
                 }
-
             });
     }, []);
+
+    useEffect(() => {
+        fetch('http://localhost:3000/api/user/'+user_id, {
+            headers: { Authorization: token },
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setUserName(data.data.username);
+            })
+    }, [])
+
     console.log(revs)
+
     return (
         <Container fluid style={{backgroundColor: '#000'}}>
             <div style={{backgroundColor: '#000', margin: "10px"}} className="d-flex justify-content-between">
@@ -46,6 +62,8 @@ const Revs = () => {
                                                 name='rating'
                                                 starDimension="30px"
                                             />
+                                            <CardSubtitle>By: {userName}</CardSubtitle>
+
                                         </Card.Text>
                                         {localStorage.getItem('role')==='admin' && (
                                         <Button variant={"outline-danger"} onClick={() => {

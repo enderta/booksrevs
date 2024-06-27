@@ -8,43 +8,22 @@ import AddBook from "./AddBook";
 import Revs from "./Revs";
 import AddRev from "./AddRev";
 
-
 function Pages() {
-    const isLoggedIn = localStorage.getItem("token");
+    const isLoggedIn = Boolean(localStorage.getItem("token"));
+
 
     return (
         <div>
             <Routes>
-                {isLoggedIn ? (
-                    localStorage.getItem("role") === "admin" ? (
-                        <>
-                            <Route path={"/*"} element={<Home/>}/>
-                            <Route path="/register" element={<Register/>}/>
-                            <Route path="/login" element={<Login/>}/>
-                            <Route path="/books" element={<Books/>}/>
-                            <Route path="/add" element={<AddBook/>}/>
-                            <Route path="/revs/:id" element={<Revs/>}/>
-                            <Route path="/addrev/:id" element={<AddRev/>}/>
-                        </>
-                    ) : (
-                        <>
-                            <Route path={"/*"} element={<Home/>}/>
-                            <Route path="/register" element={<Register/>}/>
-                            <Route path="/login" element={<Login/>}/>
-                            <Route path="/books" element={<Books/>}/>
-                            <Route path="/revs/:id" element={<Revs/>}/>
-
-
-                        </>
-                    )
-                ) : (
-                    <>
-                        <Route path={"/*"} element={<Home/>}/>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/books" element={<Books/>}/>
-                    </>
+                <Route path="/" element={<Home />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/books" element={<Books />} />
+                {isLoggedIn  && (
+                    <Route path="/add" element={<AddBook />} />
                 )}
+                <Route path="/revs/:id" element={<Revs />} />
+                <Route path="/addrev/:id" element={<AddRev />} />
             </Routes>
         </div>
     );
